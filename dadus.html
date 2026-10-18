@@ -1,0 +1,389 @@
+ele. Ita nia seksaun 5. DEMONSTRASAUN PROJETU (REZULTADU) bele hadia atu sai akademiku liu, no iha tempu hanesan hau bele fó source code atu suporta funsaun booking ticket, hili kadeira, rai dadus pasajeiru, haree dadus, no kansela rezervasaun.
+
+Abaixo hau organiza tuir ita nia sub-seksaun.
+
+5. DEMONSTRASAUN PROJETU (REZULTADU)
+5.1 Menu Booking Ticket
+Menu ida-ne'e mak interface principal ne'ebé fó oportunidade ba utilizadór atu hahú prosesu booking ticket. Iha menu ida-ne'e, utilizadór bele asesu ba prosesu hili kadeira, prense dadus pasajeiru, haree dadus pasajeiru, no kansela rezervasaun.
+
+Prosesu booking hahú bainhira utilizadór hili menu Booking Ticket. Depois ne'e, sistema sei lori utilizadór ba menu Hili Kadeira atu hili kadeira ne'ebé disponível.
+
+5.2 Menu Hili Kadeira
+Menu Hili Kadeira uza atu hatudu lista kadeira sira ne'ebé disponivel iha transportasaun. Utilizadór bele hili kadeira tuir nia hakarak.
+
+Ezemplu, utilizadór hili Kadeira A1. Bainhira kadeira A1 hili ona, sistema sei lori utilizadór ba pájina Detallu Pasajeirus, atu prense dadus identidade.
+
+5.3 Menu Detallu Pasajeirus
+Menu Detallu Pasajeirus mak parte ne'ebé utilizadór tenke prense informasaun kona-ba pasajeiru. Dadus ne'ebé bele prense inklui naran, númeru pasaporte, númeru telefone, no informasaun relevante seluk.
+
+Depois utilizadór prense dadus hotu ona, utilizadór tenke klik Kontinua. Sistema sei verifika dadus no lori utilizadór ba menu Rezumu de Rezerva.
+
+5.4 Menu Rezumu de Rezerva
+Menu Rezumu de Rezerva hatudu fali informasaun rezervasaun antes sistema rai dadus. Iha menu ida-ne'e, utilizadór bele haree kadeira no dadus pasajeiru ne'ebé prense ona.
+
+Se dadus hotu loos, utilizadór bele klik Rai Dados. Sistema sei rai dadus rezervasaun no dadus pasajeiru ba database.
+
+Se utilizadór klik Sai, sistema sei fila fali ba menu principal ka menu Hili Kadeira.
+
+5.5 Menu Hare Dadus Pasajeirus
+Menu Hare Dadus Pasajeirus uza atu haree fila fali dadus pasajeiru ne'ebé rai ona iha sistema.
+
+Depois utilizadór asesu ba menu ida-ne'e, sistema sei hatudu lista dadus pasajeiru no informasaun rezervasaun hanesan:
+
+Naran pasajeiru
+Númeru pasaporte
+Númeru telefone
+Kadeira
+Status rezervasaun
+Bainhira utilizadór klik Fila, sistema sei lori fila fali ba menu principal.
+
+5.6 Menu Kansela Dadus
+Menu Kansela Dadus uza atu kansela rezervasaun bainhira utilizadór lakohi kontinua ho booking ticket.
+
+Primeiru, utilizadór tenke asesu ba menu Kansela. Sistema sei hatudu lista kadeira ne'ebé iha rezervasaun.
+
+Ezemplu, utilizadór hili Kadeira A1. Depois sistema sei husu númeru pasaporte atu konfirma katak rezervasaun ne'e pertense ba pasajeiru ne'ebé loos.
+
+Depois prense númeru pasaporte, utilizadór klik Kansela Reservadu. Sistema sei hatudu mensajen konfirmasaun. Utilizadór klik OK atu kontinua prosesu kanselamentu.
+
+Depois kansela ho susesu, status kadeira sei muda husi Rezervadu ba Disponível, no kadeira ne'e bele uza fali ba booking seluk.
+
+Source Code / Koding
+Se ita uza HTML, CSS no JavaScript, ita bele uza estrutura simples hanesan tuir mai. Koding ida-ne'e demonstra prosesu prinsipal husi ita nia projetu.
+
+1. index.html
+<!DOCTYPE html>
+<html lang="tet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Booking Ticket</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Sistema Booking Ticket</h1>
+
+    <!-- Menu Principal -->
+    <div id="menu">
+        <button onclick="showSeats()">Booking Ticket</button>
+        <button onclick="showPassengers()">Hare Dadus Pasajeirus</button>
+        <button onclick="showCancel()">Kansela Dadus</button>
+    </div>
+
+    <!-- Menu Hili Kadeira -->
+    <div id="seats" class="page">
+        <h2>Menu Hili Kadeira</h2>
+
+        <div class="seat-container">
+            <button class="seat" onclick="selectSeat('A1')">A1</button>
+            <button class="seat" onclick="selectSeat('A2')">A2</button>
+            <button class="seat" onclick="selectSeat('A3')">A3</button>
+            <button class="seat" onclick="selectSeat('A4')">A4</button>
+        </div>
+
+        <button onclick="backMenu()">Fila</button>
+    </div>
+
+    <!-- Detallu Pasajeirus -->
+    <div id="passengerForm" class="page">
+        <h2>Detallu Pasajeirus</h2>
+
+        <p>Kadeira: <strong id="selectedSeat"></strong></p>
+
+        <input type="text" id="name" placeholder="Naran Kompletu">
+        <input type="text" id="passport" placeholder="Numeru Pasaporte">
+        <input type="text" id="phone" placeholder="Numeru Telefone">
+
+        <button onclick="continueBooking()">Kontinua</button>
+        <button onclick="backMenu()">Sai</button>
+    </div>
+
+    <!-- Rezumu -->
+    <div id="summary" class="page">
+        <h2>Rezumu de Rezerva</h2>
+
+        <p>Naran: <span id="summaryName"></span></p>
+        <p>Pasaporte: <span id="summaryPassport"></span></p>
+        <p>Telefone: <span id="summaryPhone"></span></p>
+        <p>Kadeira: <span id="summarySeat"></span></p>
+
+        <button onclick="saveBooking()">Rai Dados</button>
+        <button onclick="backMenu()">Sai</button>
+    </div>
+
+    <!-- Dadus Pasajeirus -->
+    <div id="passengers" class="page">
+        <h2>Hare Dadus Pasajeirus</h2>
+
+        <div id="passengerData"></div>
+
+        <button onclick="backMenu()">Fila</button>
+    </div>
+
+    <!-- Kansela -->
+    <div id="cancel" class="page">
+        <h2>Kansela Dadus</h2>
+
+        <select id="cancelSeat">
+            <option value="">Hili Kadeira</option>
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="A3">A3</option>
+            <option value="A4">A4</option>
+        </select>
+
+        <input type="text" id="cancelPassport"
+               placeholder="Numeru Pasaporte">
+
+        <button onclick="cancelBooking()">Kansela Reservadu</button>
+        <button onclick="backMenu()">Fila</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+2. style.css
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f4f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #1d3557;
+}
+
+button {
+    background: #1d70b8;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #155a91;
+}
+
+input, select {
+    width: 90%;
+    padding: 12px;
+    margin: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.page {
+    display: none;
+}
+
+.seat-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.seat {
+    width: 70px;
+    height: 50px;
+    background: #28a745;
+}
+
+.seat:hover {
+    background: #218838;
+}
+
+3. script.js
+let booking = JSON.parse(localStorage.getItem("booking")) || null;
+
+let selectedSeat = "";
+
+function hideAll() {
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("seats").style.display = "none";
+    document.getElementById("passengerForm").style.display = "none";
+    document.getElementById("summary").style.display = "none";
+    document.getElementById("passengers").style.display = "none";
+    document.getElementById("cancel").style.display = "none";
+}
+
+function backMenu() {
+    hideAll();
+    document.getElementById("menu").style.display = "block";
+}
+
+function showSeats() {
+    hideAll();
+    document.getElementById("seats").style.display = "block";
+}
+
+function selectSeat(seat) {
+    selectedSeat = seat;
+
+    document.getElementById("selectedSeat").innerText = seat;
+
+    hideAll();
+    document.getElementById("passengerForm").style.display = "block";
+}
+
+function continueBooking() {
+
+    let name = document.getElementById("name").value;
+    let passport = document.getElementById("passport").value;
+    let phone = document.getElementById("phone").value;
+
+    if (name === "" || passport === "" || phone === "") {
+        alert("Favor prense dadus hotu.");
+        return;
+    }
+
+    document.getElementById("summaryName").innerText = name;
+    document.getElementById("summaryPassport").innerText = passport;
+    document.getElementById("summaryPhone").innerText = phone;
+    document.getElementById("summarySeat").innerText = selectedSeat;
+
+    hideAll();
+    document.getElementById("summary").style.display = "block";
+}
+
+function saveBooking() {
+
+    booking = {
+        name: document.getElementById("name").value,
+        passport: document.getElementById("passport").value,
+        phone: document.getElementById("phone").value,
+        seat: selectedSeat,
+        status: "Rezervadu"
+    };
+
+    localStorage.setItem("booking", JSON.stringify(booking));
+
+    alert("Dadus rezervasaun rai ho susesu!");
+
+    backMenu();
+}
+
+function showPassengers() {
+
+    hideAll();
+
+    let data = document.getElementById("passengerData");
+
+    if (booking === null) {
+        data.innerHTML = "<p>Seidauk iha dadus pasajeiru.</p>";
+    } else {
+        data.innerHTML = `
+            <p><strong>Naran:</strong> ${booking.name}</p>
+            <p><strong>Pasaporte:</strong> ${booking.passport}</p>
+            <p><strong>Telefone:</strong> ${booking.phone}</p>
+            <p><strong>Kadeira:</strong> ${booking.seat}</p>
+            <p><strong>Status:</strong> ${booking.status}</p>
+        `;
+    }
+
+    document.getElementById("passengers").style.display = "block";
+}
+
+function showCancel() {
+    hideAll();
+    document.getElementById("cancel").style.display = "block";
+}
+
+function cancelBooking() {
+
+    let seat = document.getElementById("cancelSeat").value;
+    let passport = document.getElementById("cancelPassport").value;
+
+    if (seat === "" || passport === "") {
+        alert("Favor hili kadeira no prense numeru pasaporte.");
+        return;
+    }
+
+    if (booking === null) {
+        alert("La iha rezervasaun.");
+        return;
+    }
+
+    if (booking.seat === seat &&
+        booking.passport === passport) {
+
+        booking.status = "Kanseladu";
+
+        localStorage.removeItem("booking");
+
+        alert("Rezervasaun kansela ho susesu!");
+
+        backMenu();
+
+    } else {
+        alert("Kadeira ka numeru pasaporte la loos.");
+    }
+}
+
+Fluxu Sistema
+Koding ne'e bele hatudu ho fluxu simples hanesan:
+
+MENU PRINCIPAL
+      |
+      v
+BOOKING TICKET
+      |
+      v
+HILI KADEIRA
+      |
+      v
+DETALLU PASAJEIRUS
+      |
+      v
+REZUMU DE REZERVA
+      |
+      v
+RAI DADOS
+      |
+      v
+DADUS RAI TIHA ONA
+
+Ba kanselamentu:
+
+MENU PRINCIPAL
+      |
+      v
+KANSELA DADUS
+      |
+      v
+HILI KADEIRA
+      |
+      v
+PRENSE NUMERU PASAPORTE
+      |
+      v
+KANSELA RESERVADU
+      |
+      v
+OK
+      |
+      v
+REZERVASAUN KANSELA
+
+Nota importante: koding iha leten uza localStorage, nune'e di'ak ba demonstrasaun/protótipo. Se ita nia projetu final tenke iha database, sistema di'ak liu uza PHP + MySQL (ka Laravel/Node.js) atu dadus pasajeiru no rezervasaun bele rai permanentemente.
